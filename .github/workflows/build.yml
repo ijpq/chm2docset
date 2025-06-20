@@ -1,0 +1,40 @@
+name: Convert CHM to Docset
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'input/*.chm'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y golang-go chmlib-bin libchm-dev
+
+      - name: Set up Go proxy
+        run: |
+          go env -w GO111MODULE=on
+          go env -w GOPROXY=https://goproxy.cn,direct
+
+      - name: Build chm2docset
+        run: |
+          go build -o chm2docset chm2docset.go
+
+      - name: Convert CHM to Docset
+        run: |
+          mkdir -p output
+          ./chm2docset -platform custom -out output/mydoc.docset input/mydoc.chm
+
+      - name: Upload docset as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mydoc-docset
+          path: output/mydoc.docset
+
