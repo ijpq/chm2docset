@@ -18,6 +18,14 @@ jobs:
           sudo apt update
           sudo apt install -y golang-go libchm-dev
 
+      - name: Build extract_chmLib
+        run: |
+          git clone https://github.com/richardpl/chmlib.git
+          cd chmlib
+          ./configure
+          make
+          sudo cp src/extract_chmLib /usr/local/bin/
+
       - name: Set up Go proxy
         run: |
           go env -w GO111MODULE=on
