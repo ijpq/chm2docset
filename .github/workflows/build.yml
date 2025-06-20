@@ -24,9 +24,9 @@ jobs:
           go env -w GOPROXY=https://goproxy.cn,direct
 
       - name: Create go.mod & install deps
-	run: |
-	  go mod init github.com/ngs/chm2docset
-	  go get github.com/mattn/go-sqlite3
+        run: |
+          go mod init github.com/ngs/chm2docset
+          go get github.com/mattn/go-sqlite3
 
       - name: Build chm2docset
         run: |
