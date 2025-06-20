@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y golang-go chmlib-bin libchm-dev
+          sudo apt install -y golang-go libchm-dev
 
       - name: Set up Go proxy
         run: |
